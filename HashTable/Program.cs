@@ -12,10 +12,41 @@ namespace PirateCove
       
         static void Main(string[] args)
         {   
-            Bus bus = new Bus();
-            bus
-            DateTime date = DateTime.Now;
-            Console.WriteLine(date.ToShortTimeString());
+            Bus bus1 = new Bus() { Location = Location.Italy , Name = "Bus1"};
+            Bus bus2 = new Bus() { Location = Location.Germany, Name = "Bus2"};
+            Bus bus3 = new Bus() { Location = Location.Ireland, Name = "Bus3"};
+            Bus bus4 = new Bus() { Location = Location.Belgium, Name = "Bus4"};
+            List<Bus> busList = new List<Bus>
+            {
+                bus1,
+                bus2,
+                bus3,
+                bus4
+            };
+            PiratesCoveUK piratesCoveUK = new PiratesCoveUK() 
+            { 
+                Location = Location.UK, Name= "pirateCoveUK" 
+            };
+            PiratesCoveBelgium piratesCoveBelgium = new PiratesCoveBelgium() 
+            { 
+                Location = Location.Belgium, 
+                Name = "pirateCoveBelgium" 
+            };
+            PiratesCoveIreland piratesCoveIreland = new PiratesCoveIreland() 
+            { 
+                Location = Location.Ireland,
+                Name = "pirateCoveIreland"
+            };
+            PiratesCovesGermany piratesCovesGermany = new PiratesCovesGermany() 
+            { 
+                Location = Location.Germany,
+                Name = "pirateCoveGermany"
+            };
+            PiratesCovesItaly piratesCovesItaly = new PiratesCovesItaly() 
+            { 
+                Location = Location.Italy,
+                Name = "pirateCoveItaly"
+            };
             Golfer golfer = new Golfer() 
             { 
                 Name = "Süle" , StartLocation = Location.Germany, EndLocation = Location.Italy
@@ -60,17 +91,32 @@ namespace PirateCove
             { 
                 Name = "Steve5", StartLocation = Location.Germany, EndLocation = Location.UK
             };
-            bus.SetGolfer(golfer1);
-            bus.SetGolfer(golfer2);
-            bus.SetGolfer(golfer3);
-            bus.SetGolfer(golfer4);
-            bus.SetGolfer(golfer5);
-            bus.SetGolfer(golfer6);
-            bus.SetGolfer(golfer7);
-            bus.SetGolfer(golfer8);
-            bus.SetGolfer(golfer9);
-            bus.SetGolfer(golfer10);
-            bus.PrintQueue();
+            foreach (var bus in busList)
+            {
+                bus.SetGolfer(golfer1);
+                bus.SetGolfer(golfer2);
+                bus.SetGolfer(golfer3);
+                bus.SetGolfer(golfer4);
+                bus.SetGolfer(golfer5);
+                bus.SetGolfer(golfer6);
+                bus.SetGolfer(golfer7);
+                bus.SetGolfer(golfer8);
+                bus.SetGolfer(golfer9);
+                bus.SetGolfer(golfer10);
+            }
+            bus1.BusToDestination(piratesCovesItaly, piratesCoveUK);
+            bus2.BusToDestination(piratesCovesGermany, piratesCoveBelgium);
+            bus3.BusToDestination(piratesCoveIreland, piratesCovesGermany);
+            piratesCoveBelgium.PrintBusses();
+            piratesCoveBelgium.PrintGolfer();
+            piratesCoveIreland.PrintBusses();
+            piratesCoveIreland.PrintGolfer();
+            piratesCoveUK.PrintBusses();
+            piratesCoveUK.PrintGolfer();
+            piratesCovesGermany.PrintBusses();
+            piratesCovesGermany.PrintGolfer();
+            piratesCovesItaly.PrintBusses();
+            piratesCovesItaly.PrintGolfer();
         }
     }
 }

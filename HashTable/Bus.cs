@@ -10,10 +10,13 @@ namespace PirateCove
     {
         //Queue<Golfer> BusQueue { get; set; } = new Queue<Golfer>();
         List<Golfer> BusList { get; set; } = new List<Golfer>();
-        Location[] locations = new Location[5] { Location.UK, Location.Germany, 
-            Location.Belgium, Location.Italy, Location.Ireland };
+        public string Name { get; set; }
         public Location Location { get; set; }
         private readonly int limit = 20;
+        public bool hasSpace() 
+        {
+            return this.BusList.Count < 20;
+        } 
         public void SetGolfer(Golfer golfer)
         {
             if (BusList.Count < limit)
@@ -29,21 +32,32 @@ namespace PirateCove
         {
             return BusList.FirstOrDefault();
         }
-        public List<Golfer> BusToDestination(Location location, Pirate)
+        public void BusToDestination(PiratesCoves pirateCoveStart, PiratesCoves pirateCoveDest)
         {
-            foreach (Golfer g in BusList) 
-            { 
-                if (g.StartLocation == location)
+            foreach (Golfer golfer in pirateCoveStart.GolferAtCove)
+            {
+                if (this.hasSpace())
                 {
-                    BusList.Add(g);
-                }
-                if(g.EndLocation == location)
-                {
-                    BusList.Remove(g);
-                    
+                    this.BusList.Add(golfer);
+                    pirateCoveStart.GolferAtCove.Remove(golfer);                  
                 }
             }
-            return BusList;
+            for (int i = 0; i < pirateCoveStart.GolferAtCove.Count; i++)
+            {
+                if (pirateCoveStart.GolferAtCove[i].EndLocation == pirateCoveDest.GetLocation())
+                {
+                    BusList.Add(pirateCoveStart.GolferAtCove[i]);
+                }
+            }
+            for(int i= 0;i <BusList.Count;i++)
+            {
+                if (BusList[i].EndLocation == pirateCoveDest.GetLocation())
+                {
+                    BusList.Remove(BusList[i]);
+                }
+            }
+            pirateCoveStart.BusStart(this);
+            pirateCoveDest.BusDest(this);
         }
         public void PrintQueue()
         {
