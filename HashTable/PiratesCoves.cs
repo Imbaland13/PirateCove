@@ -19,11 +19,11 @@ namespace PirateCove
             return this.Location;
         }
 
-        public void BusDest(Bus bus)
+        public void BusAdd(Bus bus)
         {
             Busse.Add(bus);
         }
-        public void BusStart(Bus bus)
+        public void BusLeave(Bus bus)
         {
             if (Busse.Contains(bus))
             {

@@ -56,8 +56,8 @@ namespace PirateCove
                     BusList.Remove(BusList[i]);
                 }
             }
-            pirateCoveStart.BusStart(this);
-            pirateCoveDest.BusDest(this);
+            pirateCoveStart.BusLeave(this);
+            pirateCoveDest.BusAdd(this);
         }
         public void PrintQueue()
         {
