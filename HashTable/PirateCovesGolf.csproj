@@ -45,13 +45,9 @@
   <ItemGroup>
     <Compile Include="Bus.cs" />
     <Compile Include="Golfer.cs" />
-    <Compile Include="Location.cs" />
-    <Compile Include="PiratesCoveBelgium.cs" />
-    <Compile Include="PiratesCoveIreland.cs" />
-    <Compile Include="PiratesCoves.cs" />
-    <Compile Include="PiratesCovesGermany.cs" />
-    <Compile Include="PiratesCovesItaly.cs" />
-    <Compile Include="PiratesCoveUK.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="Manager.cs" />
+    <Compile Include="PirateCove.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

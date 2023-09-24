@@ -4,18 +4,19 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HashTable;
 
-namespace PirateCove
+namespace PiratesCoves
 {
     internal class Program
     {
-      
+
         static void Main(string[] args)
-        {   
-            Bus bus1 = new Bus() { Location = Location.Italy , Name = "Bus1"};
-            Bus bus2 = new Bus() { Location = Location.Germany, Name = "Bus2"};
-            Bus bus3 = new Bus() { Location = Location.Ireland, Name = "Bus3"};
-            Bus bus4 = new Bus() { Location = Location.Belgium, Name = "Bus4"};
+        {
+            Bus bus1 = new Bus("Bus1", "Italy");
+            Bus bus2 = new Bus("Bus2", "Germany");
+            Bus bus3 = new Bus("Bus3", "Ireland");
+            Bus bus4 = new Bus("Bus4", "Belgium");
             List<Bus> busList = new List<Bus>
             {
                 bus1,
@@ -23,74 +24,30 @@ namespace PirateCove
                 bus3,
                 bus4
             };
-            PiratesCoveUK piratesCoveUK = new PiratesCoveUK() 
-            { 
-                Location = Location.UK, Name= "pirateCoveUK" 
-            };
-            PiratesCoveBelgium piratesCoveBelgium = new PiratesCoveBelgium() 
-            { 
-                Location = Location.Belgium, 
-                Name = "pirateCoveBelgium" 
-            };
-            PiratesCoveIreland piratesCoveIreland = new PiratesCoveIreland() 
-            { 
-                Location = Location.Ireland,
-                Name = "pirateCoveIreland"
-            };
-            PiratesCovesGermany piratesCovesGermany = new PiratesCovesGermany() 
-            { 
-                Location = Location.Germany,
-                Name = "pirateCoveGermany"
-            };
-            PiratesCovesItaly piratesCovesItaly = new PiratesCovesItaly() 
-            { 
-                Location = Location.Italy,
-                Name = "pirateCoveItaly"
-            };
-            Golfer golfer = new Golfer() 
-            { 
-                Name = "Süle" , StartLocation = Location.Germany, EndLocation = Location.Italy
-            };
-            Golfer golfer1 = new Golfer() 
-            { 
-                Name = "Süle",StartLocation = Location.Germany, EndLocation =Location.Italy 
-            };
-            Golfer golfer2 = new Golfer()
+            PirateCove piratesCoveUK = new PirateCove("UK", "pirateCoveUK");
+            PirateCove piratesCoveBelgium = new PirateCove("Belgium", "pirateCoveBelgium");
+            PirateCove piratesCoveIreland = new PirateCove("Ireland", "pirateCoveIreland");
+            PirateCove piratesCoveGermany = new PirateCove("Germany", "pirateCoveGermany");
+            PirateCove piratesCoveItaly = new PirateCove("Italy", "pirateCoveItaly");           
+            List<PirateCove>pirateCoves = new List<PirateCove>
             {
-                Name = "Ferhat", StartLocation = Location.Italy, EndLocation = Location.UK
+                piratesCoveUK,
+                piratesCoveBelgium,
+                piratesCoveGermany,
+                piratesCoveIreland,
+                piratesCoveItaly
             };
-            Golfer golfer3 = new Golfer() 
-            { 
-                Name = "Naeem", StartLocation = Location.Italy, EndLocation = Location.Belgium
-            };
-            Golfer golfer4 = new Golfer() 
-            { 
-                Name = "Mathias", StartLocation =Location.Italy, EndLocation = Location.Belgium
-            };
-            Golfer golfer5 = new Golfer() 
-            { 
-                Name = "Max", StartLocation = Location.Ireland, EndLocation =Location.Belgium
-            };
-            Golfer golfer6 = new Golfer() 
-            { 
-                Name = "Steve1", StartLocation =Location.Ireland, EndLocation =Location.Italy
-            };
-            Golfer golfer7 = new Golfer() 
-            { 
-                Name = "Steve2", StartLocation = Location.Belgium, EndLocation =Location.Italy
-            };
-            Golfer golfer8 = new Golfer() 
-            { 
-                Name = "Steve3", StartLocation = Location.UK, EndLocation =Location.Germany
-            };
-            Golfer golfer9 = new Golfer() 
-            { 
-                Name = "Steve4", StartLocation=Location.Germany, EndLocation =Location.Ireland
-            };
-            Golfer golfer10 = new Golfer() 
-            { 
-                Name = "Steve5", StartLocation = Location.Germany, EndLocation = Location.UK
-            };
+            //Helper helper = new Helper() { CoveList = pirateCoves};
+            Golfer golfer1 = new Golfer("Süle", "Germany", "Italy");
+            Golfer golfer2 = new Golfer("Ferhat", "Italy", "UK");
+            Golfer golfer3 = new Golfer("Naeem", "Italy", "Belgium");
+            Golfer golfer4 = new Golfer("Mathias", "Italy", "Belgium");
+            Golfer golfer5 = new Golfer("Max", "Ireland", "Belgium");
+            Golfer golfer6 = new Golfer("Steve1", "Ireland", "Italy");
+            Golfer golfer7 = new Golfer("Steve2", "Belgium", "Italy");
+            Golfer golfer8 = new Golfer("Steve3", "UK", "Germany");
+            Golfer golfer9 = new Golfer("Steve4", "Germany", "Ireland");
+            Golfer golfer10 = new Golfer("Steve5", "Germany", "UK");
             foreach (var bus in busList)
             {
                 bus.SetGolfer(golfer1);
@@ -103,20 +60,33 @@ namespace PirateCove
                 bus.SetGolfer(golfer8);
                 bus.SetGolfer(golfer9);
                 bus.SetGolfer(golfer10);
+                bus.AddStations(piratesCoveUK.GetLocation());
+                bus.AddStations(piratesCoveGermany.GetLocation());
+                bus.AddStations(piratesCoveItaly.GetLocation());
+                bus.AddStations(piratesCoveIreland.GetLocation());
+                bus.AddStations(piratesCoveBelgium.GetLocation());
             }
-            bus1.BusToDestination(piratesCovesItaly, piratesCoveUK);
-            bus2.BusToDestination(piratesCovesGermany, piratesCoveBelgium);
-            bus3.BusToDestination(piratesCoveIreland, piratesCovesGermany);
+            //foreach (var piratecove in pirateCoves) 
+            //{
+            //    piratecove.GolferAtCove.Add(golfer);
+            //}
+            Manager manager = new Manager() ;
+            //manager.BusToDestination(bus1, piratesCoveItaly, piratesCoveGermany);
+            manager.BusToDestination(bus2, piratesCoveItaly, piratesCoveBelgium);
+            //manager.BusToDestination(bus3, piratesCoveIreland, piratesCoveGermany);
             piratesCoveBelgium.PrintBusses();
             piratesCoveBelgium.PrintGolfer();
-            piratesCoveIreland.PrintBusses();
-            piratesCoveIreland.PrintGolfer();
-            piratesCoveUK.PrintBusses();
-            piratesCoveUK.PrintGolfer();
-            piratesCovesGermany.PrintBusses();
-            piratesCovesGermany.PrintGolfer();
-            piratesCovesItaly.PrintBusses();
-            piratesCovesItaly.PrintGolfer();
+            piratesCoveGermany.PrintBusses();
+            piratesCoveGermany.PrintGolfer();
+            //piratesCoveIreland.PrintBusses();
+            //piratesCoveIreland.PrintGolfer();
+            //piratesCoveUK.PrintBusses();
+            //piratesCoveUK.PrintGolfer();
+            //piratesCoveGermany.PrintBusses();
+            //piratesCoveGermany.PrintGolfer();
+            //piratesCovesItaly.PrintBusses();
+            //piratesCovesItaly.PrintGolfer();
+            Console.ReadLine();
         }
     }
 }

@@ -1,12 +1,13 @@
-﻿using System;
+﻿using PiratesCoves;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PirateCove
+namespace HashTable
 {
-    internal class PiratesCoveUK : PiratesCoves
+    internal class Helper
     {
     }
 }

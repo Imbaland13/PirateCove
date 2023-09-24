@@ -5,16 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PirateCove
+namespace PiratesCoves
 {
-    internal class PiratesCoves
+    internal class PirateCove
     {
         public string Name { get; set; }
-        public Location Location { get; set; } = new Location();
+        public string Location { get; set; }
         public List<Bus> Busse { get; set; } = new List<Bus>();
         public Bus Bus { get; set; }
         public List<Golfer> GolferAtCove { get; set; } = new List<Golfer>();
-        public Location GetLocation()
+        public PirateCove(string location, string name) 
+        {
+            this.Name = name;
+            this.Location = location;
+        }
+        public string GetLocation()
         {
             return this.Location;
         }
@@ -40,10 +45,19 @@ namespace PirateCove
         //}
         public void PrintGolfer()
         {
-            foreach(Golfer golfer in  GolferAtCove)
+            if(this.GolferAtCove.Count > 0)
             {
-                Console.WriteLine(golfer);
+                Console.WriteLine(this.Name + " has the following Golfers:");
+                foreach (Golfer golfer in  GolferAtCove)
+                {
+                Console.WriteLine(golfer.Name);
+                }
             }
+            else 
+            {
+                Console.WriteLine($"No Golfer at {this.Name}");
+            }
+            
         }
         public void PrintBusses()
         {
@@ -57,8 +71,7 @@ namespace PirateCove
             else 
             {
                 Console.WriteLine("No Vehicles at PirateCove " + this.Name);
-            };
-            
+            };          
         }
     }
 }
