@@ -9,9 +9,6 @@ namespace PiratesCoves
 {
     internal class Manager
     {
-        //PirateCove pirateCove { set; get; }
-        //Bus bus { set; get; }
-
         public void BusToDestination(Bus bus, PirateCove pirateCoveStart, PirateCove pirateCoveDest)
         {
             foreach (Golfer golfer in pirateCoveStart.GolferAtCove)
@@ -33,13 +30,15 @@ namespace PiratesCoves
             bus.CurrentLocation = pirateCoveDest.Location;
             pirateCoveStart.BusLeave(bus);
             pirateCoveDest.BusAdd(bus);
-        }
+        }      
         public void BusNextStopInSchedule(Bus bus)
         {
             PirateCove piratecovecurrent = null;
+            PirateCove piratecovenext = null;
             if(bus.Schedule.FindLast == bus.CurrentLocation)
             {
-                bus.CurrentLocation = bus.Schedule.First();
+                piratecovecurrent = bus.Schedule.First();
+                piratecovenext = bus.Schedule[1];
             }
             else
             {
@@ -48,10 +47,11 @@ namespace PiratesCoves
                     if (bus.Schedule[i].Location == bus.CurrentLocation)
                     {
                         piratecovecurrent = bus.Schedule[i];
+                        piratecovenext = bus.Schedule[i + 1];
                     }
                 }
-            }          
-            BusToDestination(bus, piratecovecurrent, bus.GetNextStation());
+            }
+            BusToDestination(bus, piratecovecurrent, piratecovenext);
         }
     }
 }

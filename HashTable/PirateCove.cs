@@ -23,7 +23,6 @@ namespace PiratesCoves
         {
             return this.Location;
         }
-
         public void BusAdd(Bus bus)
         {
             Busse.Add(bus);
@@ -39,10 +38,6 @@ namespace PiratesCoves
         {
             this.GolferAtCove.Add(golfer);
         }
-        //public Golfer GetGolfer()
-        //{
-            
-        //}
         public void PrintGolfer()
         {
             if(this.GolferAtCove.Count > 0)
@@ -50,7 +45,7 @@ namespace PiratesCoves
                 Console.WriteLine(this.Name + " has the following Golfers:");
                 foreach (Golfer golfer in  GolferAtCove)
                 {
-                Console.WriteLine(golfer.Name);
+                    Console.WriteLine(golfer.Name);
                 }
             }
             else 
@@ -71,7 +66,7 @@ namespace PiratesCoves
             else 
             {
                 Console.WriteLine("No Vehicles at PirateCove " + this.Name);
-            };          
+            }         
         }
     }
 }

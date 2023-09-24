@@ -10,7 +10,6 @@ namespace PiratesCoves
     {
         public List<Golfer> Passengers { get; set; } = new List<Golfer>();
         public List<PirateCove> Schedule { get; set; } = new List<PirateCove>();
-
         public string StartLocation { get; set; }
         public string CurrentLocation { get; set; }
         public string Name { get; set; }
