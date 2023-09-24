@@ -37,13 +37,20 @@ namespace PiratesCoves
         public void BusNextStopInSchedule(Bus bus)
         {
             PirateCove piratecovecurrent = null;
-            for(int i = 0; i < bus.Schedule.Count; i++)
+            if(bus.Schedule.FindLast == bus.CurrentLocation)
             {
-                if (bus.Schedule[i].Location == bus.CurrentLocation)
-                {
-                    piratecovecurrent = bus.Schedule[i];
-                }
+                bus.CurrentLocation = bus.Schedule.First();
             }
+            else
+            {
+                for(int i = 0; i < bus.Schedule.Count; i++)
+                {
+                    if (bus.Schedule[i].Location == bus.CurrentLocation)
+                    {
+                        piratecovecurrent = bus.Schedule[i];
+                    }
+                }
+            }          
             BusToDestination(bus, piratecovecurrent, bus.GetNextStation());
         }
     }
