@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 
 namespace PirateCoves
 {
@@ -15,22 +17,19 @@ namespace PirateCoves
             List<Bus> busses = CreateBusses();
             List<Golfer> golfers = CreateGolfers();
             
-            
+            string busJson = JsonSerializer.Serialize(busses[0]);
 
-            foreach (Bus bus in busses)
+            int rounds = 0;
+            while (rounds < 5)
             {
-                bus.HandleTrip();
-                bus.PrintPassengers();
+                foreach (Bus bus in busses)
+                {
+                    bus.HandleTrip();
+                }
+                rounds++;
+                Console.WriteLine($"Round {rounds} is over.");
+                Console.WriteLine();
             }
-            // CoveIndex.PirateCoves.ForEach(x => x.PrintBusses());
-            // CoveIndex.PirateCoves.ForEach(x => x.PrintGolfer());
-            
-            foreach (Bus bus in busses)
-            {
-                bus.HandleTrip();
-                bus.PrintPassengers();
-            }
-
             
             Console.ReadLine();
         }
@@ -39,16 +38,16 @@ namespace PirateCoves
         {
             return new List<Golfer>()
             {
-                new Golfer("Süle", "Germany", "Italy"),
+                new Golfer("Siuuuu", "Germany", "Italy"),
                 new Golfer("Ferhat", "Italy", "UK"),
                 new Golfer("Naeem", "Italy", "Belgium"),
                 new Golfer("Mathias", "Italy", "Belgium"),
                 new Golfer("Max", "Ireland", "Belgium"),
-                new Golfer("Steve1", "Ireland", "Italy"),
-                new Golfer("Steve2", "Belgium", "Italy"),
-                new Golfer("Steve3", "UK", "Germany"),
-                new Golfer("Steve4", "Germany", "Ireland"),
-                new Golfer("Steve5", "Germany", "UK"),
+                new Golfer("Tesch", "Ireland", "Italy"),
+                new Golfer("Basti", "Belgium", "Italy"),
+                new Golfer("Nico", "UK", "Germany"),
+                new Golfer("Fred", "Germany", "Ireland"),
+                new Golfer("Paavo", "Germany", "UK"),
             };
         }
 
@@ -66,13 +65,8 @@ namespace PirateCoves
 
         static List<Bus> CreateBusses()
         {
-            return new List<Bus>
-            {
-                new Bus("Ferrari Bus", "Italy", new List<string> {"Italy", "Belgium", "Germany", "Ireland", "UK"} ),
-                new Bus("Mercedes Bus", "Germany", new List<string> {"Italy", "Germany", "Belgium", "Ireland", "UK"} ),
-                new Bus("Iren Bus", "Ireland", new List<string> {"Italy", "Germany", "Belgium", "Ireland", "UK"} ),
-                new Bus("BB", "Belgium", new List<string> {"Italy", "Germany", "Belgium", "Ireland", "UK"} ),
-            };
+            string text = File.ReadAllText("Busses.json");
+            return JsonSerializer.Deserialize<List<Bus>>(text);
         }
     }
 }

@@ -1,0 +1,27 @@
+﻿[
+  {  
+    "Name": "Bus 1",
+    "StartLocation": "Germany",
+    "Schedule": ["Italy", "Belgium", "Germany", "Ireland", "UK"]
+  },
+  {
+    "Name": "Bus 2",
+    "StartLocation": "Belgium",
+    "Schedule": ["Italy", "Ireland", "UK", "Belgium", "Germany" ]
+  },
+  {
+    "Name": "Bus 3",
+    "StartLocation": "Italy",
+    "Schedule": ["Belgium", "Italy",  "UK", "Germany", "Ireland"]
+  },
+  {
+    "Name": "Bus 4",
+    "StartLocation": "Ireland",
+    "Schedule": ["Ireland", "Italy", "Belgium", "Germany", "UK"]
+  },
+  {
+    "Name": "Bus 5",
+    "StartLocation": "UK",
+    "Schedule": [ "Germany","Italy", "Belgium", "Ireland", "UK"]
+  }
+]

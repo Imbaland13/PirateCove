@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace PirateCoves
 {
@@ -8,11 +9,11 @@ namespace PirateCoves
     {
         private readonly int CAPACITY = 20;
         List<Golfer> Passengers { get; set; } = new List<Golfer>();
-        List<string> Schedule { get; set; }
         PirateCove CurrentCove { get; set; }
         PirateCove NextCove { get; set; }
         public string Name { get; set; }
         public string StartLocation { get; set; }
+        public List<string> Schedule { get; set; } = new List<string>();
         
         public Bus(string name, string startLocation, List<string> schedule) 
         {
@@ -23,7 +24,7 @@ namespace PirateCoves
             CurrentCove = CoveIndex.PirateCoves.Find(cove => cove.Location == startLocation);
             CurrentCove.AddBus(this);
         }
-
+        
         bool HasSpace() => this.Passengers.Count < CAPACITY;
         
         PirateCove GetNextStation()
@@ -67,6 +68,7 @@ namespace PirateCoves
                 {
                     CurrentCove.Visitors.Add(golfer);
                     Passengers.Remove(golfer);
+                    Console.WriteLine($"{golfer.Name} disembarked {this.Name} at {CurrentCove.Location}.");
                 }
             }
         }
@@ -78,6 +80,7 @@ namespace PirateCoves
                 {
                     Passengers.Add(golfer);
                     NextCove.Visitors.Remove(golfer);
+                    Console.WriteLine($"{golfer.Name} boarded {this.Name} at {CurrentCove.Location} and is now heading to {NextCove.Location}.");
                 }
             }
         }
@@ -90,7 +93,7 @@ namespace PirateCoves
             }
             else
             {
-                Console.WriteLine($"Der Bus {this} ist voll!");
+                Console.WriteLine($"The bus {Name} is full. {golfer.Name} cannot board.");
             }
         }
         Golfer RemoveGolfer() => Passengers.FirstOrDefault();
