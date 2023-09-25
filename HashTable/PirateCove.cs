@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace PirateCoves
 {
-    internal class PirateCove
+    public class PirateCove
     {
         string Name { get; set; }
         public string Location { get; set; }
         List<Bus> BussesAtCove { get; set; } = new List<Bus>();
-        public List<Golfer> GolferAtCove { get; set; } = new List<Golfer>();
+        public List<Golfer> Visitors { get; set; } = new List<Golfer>();
         public PirateCove(string location, string name) 
         {
             this.Name = name;
@@ -23,16 +23,16 @@ namespace PirateCoves
                 BussesAtCove.Remove(bus);
             }
         }
-        public void AddGolfer(Golfer golfer) => GolferAtCove.Add(golfer);
+        public void AddGolfer(Golfer golfer) => Visitors.Add(golfer);
 
         public void PrintGolfer()
         {
-            if (GolferAtCove.Count > 0)
+            if (Visitors.Count > 0)
             {
-                Console.WriteLine($"{Name} has the following Golfers:");
-                foreach (Golfer golfer in  GolferAtCove)
+                Console.WriteLine($"{Name} has the following Golfers: ");
+                foreach (Golfer golfer in  Visitors)
                 {
-                    Console.WriteLine(golfer.Name);
+                    Console.Write(golfer.Name);
                 }
             }
             else 
@@ -45,10 +45,10 @@ namespace PirateCoves
         {
             if (BussesAtCove.Count > 0)
             {   
-                Console.WriteLine($"{BussesAtCove.Count} Vehicle/s are currently at PirateCove {Name}.");
+                Console.WriteLine($"{BussesAtCove.Count} Vehicle/s are currently at PirateCove {Name}. Names: ");
                 foreach (var bus in BussesAtCove) 
                 {
-                    Console.WriteLine(bus.Name);
+                    Console.Write(bus.Name);
                 }
             }
             else 

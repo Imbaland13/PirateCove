@@ -4,20 +4,24 @@ using System.Linq;
 
 namespace PirateCoves
 {
-    internal class Bus
+    public class Bus
     {
         private readonly int CAPACITY = 20;
         List<Golfer> Passengers { get; set; } = new List<Golfer>();
-        List<PirateCove> Schedule { get; set; } = new List<PirateCove>();
+        List<string> Schedule { get; set; }
         PirateCove CurrentCove { get; set; }
         PirateCove NextCove { get; set; }
         public string Name { get; set; }
         public string StartLocation { get; set; }
         
-        public Bus(string name, string startLocation) 
+        public Bus(string name, string startLocation, List<string> schedule) 
         {
-            this.Name = name;
-            this.StartLocation = startLocation;
+            Name = name;
+            StartLocation = startLocation;
+            Schedule = schedule;
+            
+            CurrentCove = CoveIndex.PirateCoves.Find(cove => cove.Location == startLocation);
+            CurrentCove.AddBus(this);
         }
 
         bool HasSpace() => this.Passengers.Count < CAPACITY;
@@ -28,50 +32,56 @@ namespace PirateCoves
             
             for (int i = 0; i < Schedule.Count ; i++)
             {
-                if (CurrentCove.Location == Schedule[i].Location)
+                if (CurrentCove.Location == Schedule[i])
                 {
                     currentStationIdx = i;
                 }
             }
-            
+
             if (currentStationIdx == Schedule.Count - 1)
-                return Schedule[0];
+                return CoveIndex.PirateCoves.Find(cove => cove.Location == Schedule[0]);
             else
-                return Schedule[currentStationIdx+1];
+                return CoveIndex.PirateCoves.Find(cove => cove.Location == Schedule[currentStationIdx + 1]);
         }
-
-
-        public void DriveToNextDestination()
+        
+        public void HandleTrip()
         {
+            DisembarkPassengers();
+            NextCove = GetNextStation();
+            
+            BoardPassengers();
             CurrentCove.RemoveBus(this);
             
-            PirateCove destination = GetNextStation();
-            CurrentCove = destination;
-            destination.AddBus(this);
+            // Travel to next station
             
+            CurrentCove = NextCove;
+            CurrentCove.AddBus(this);
+        }
+        
+        void DisembarkPassengers()
+        {
             foreach (var golfer in Passengers)    
             {
                 if (golfer.EndLocation == CurrentCove.Location)
                 {
-                    destination.GolferAtCove.Add(golfer);
+                    CurrentCove.Visitors.Add(golfer);
                     Passengers.Remove(golfer);
                 }
             }
-            
-            NextCove = GetNextStation();
-
-            foreach (var golfer in destination.GolferAtCove)
+        }
+        void BoardPassengers()
+        {
+            foreach (var golfer in CurrentCove.Visitors)
             {
                 if (HasSpace() && golfer.EndLocation == NextCove.Location)
                 {
                     Passengers.Add(golfer);
-                    NextCove.GolferAtCove.Remove(golfer);
+                    NextCove.Visitors.Remove(golfer);
                 }
             }
         }
         
-        public void AddStations(PirateCove location) => Schedule.Add(location);
-        public void AddGolfer(Golfer golfer)
+        void AddGolfer(Golfer golfer)
         {
             if (Passengers.Count < CAPACITY)
             {
@@ -82,7 +92,7 @@ namespace PirateCoves
                 Console.WriteLine($"Der Bus {this} ist voll!");
             }
         }
-        public Golfer RemoveGolfer() => Passengers.FirstOrDefault();
+        Golfer RemoveGolfer() => Passengers.FirstOrDefault();
 
         public void PrintPassengers()
         {

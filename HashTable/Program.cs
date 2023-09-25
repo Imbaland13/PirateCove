@@ -3,30 +3,35 @@ using System.Collections.Generic;
 
 namespace PirateCoves
 {
+    static class CoveIndex
+    {
+        public static List<PirateCove> PirateCoves { get; set; }
+    }
     internal class Program
     {
         static void Main(string[] args)
         {
-            List<Golfer> golfers = CreateGolfers();
+            CoveIndex.PirateCoves = CreateCoves();
             List<Bus> busses = CreateBusses();
-            List<PirateCove> pirateCoves = CreateCoves();
+            List<Golfer> golfers = CreateGolfers();
+            
             
 
+            foreach (Bus bus in busses)
+            {
+                bus.HandleTrip();
+                bus.PrintPassengers();
+            }
+            // CoveIndex.PirateCoves.ForEach(x => x.PrintBusses());
+            // CoveIndex.PirateCoves.ForEach(x => x.PrintGolfer());
+            
+            foreach (Bus bus in busses)
+            {
+                bus.HandleTrip();
+                bus.PrintPassengers();
+            }
 
-            busses[0].DriveToNextDestination();
-
-            piratesCoveBelgium.PrintBusses();
-            piratesCoveBelgium.PrintGolfer();
-            piratesCoveGermany.PrintBusses();
-            piratesCoveGermany.PrintGolfer();
-            //piratesCoveIreland.PrintBusses();
-            //piratesCoveIreland.PrintGolfer();
-            //piratesCoveUK.PrintBusses();
-            //piratesCoveUK.PrintGolfer();
-            //piratesCoveGermany.PrintBusses();
-            //piratesCoveGermany.PrintGolfer();
-            //piratesCovesItaly.PrintBusses();
-            //piratesCovesItaly.PrintGolfer();
+            
             Console.ReadLine();
         }
 
@@ -51,11 +56,11 @@ namespace PirateCoves
         {
             return new List<PirateCove>
             {
-                new PirateCove("UK", "pirateCoveUK"),
-                new PirateCove("Belgium", "pirateCoveBelgium"),
-                new PirateCove("Ireland", "pirateCoveIreland"),
-                new PirateCove("Germany", "pirateCoveGermany"),
-                new PirateCove("Italy", "pirateCoveItaly"),
+                new PirateCove("UK", "UK Lads"),
+                new PirateCove("Belgium", "Brussels Bitches"),
+                new PirateCove("Ireland", "Dublin Cove"),
+                new PirateCove("Germany", "Hansa Hamburg "),
+                new PirateCove("Italy", "Roma Ferrari"),
             };
         }
 
@@ -63,10 +68,10 @@ namespace PirateCoves
         {
             return new List<Bus>
             {
-                new Bus("Bus1", "Italy"),
-                new Bus("Bus2", "Germany"),
-                new Bus("Bus3", "Ireland"),
-                new Bus("Bus4", "Belgium"),
+                new Bus("Ferrari Bus", "Italy", new List<string> {"Italy", "Germany", "Belgium", "Ireland", "UK"} ),
+                new Bus("Mercedes Bus", "Germany", new List<string> {"Italy", "Germany", "Belgium", "Ireland", "UK"} ),
+                new Bus("Iren Bus", "Ireland", new List<string> {"Italy", "Germany", "Belgium", "Ireland", "UK"} ),
+                new Bus("BB", "Belgium", new List<string> {"Italy", "Germany", "Belgium", "Ireland", "UK"} ),
             };
         }
     }
