@@ -10,7 +10,7 @@ namespace PiratesCoves
 {
     internal class Program
     {
-
+        // TODO: ALLES HARAM
         static void Main(string[] args)
         {
             Bus bus1 = new Bus("Bus1", "Italy");
