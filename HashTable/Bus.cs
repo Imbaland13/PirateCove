@@ -1,59 +1,103 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
-namespace PiratesCoves
+namespace PirateCoves
 {
-    internal class Bus
+    public class Bus
     {
-        public List<Golfer> Passengers { get; set; } = new List<Golfer>();
-        public List<PirateCove> Schedule { get; set; } = new List<PirateCove>();
-        public string StartLocation { get; set; }
-        public string CurrentLocation { get; set; }
+        private readonly int CAPACITY = 20;
+        List<Golfer> Passengers { get; set; } = new List<Golfer>();
+        PirateCove CurrentCove { get; set; }
+        PirateCove NextCove { get; set; }
         public string Name { get; set; }
-        private readonly int limit = 20;
-        public Bus(string Name, string startlocation) 
+        public string StartLocation { get; set; }
+        public List<string> Schedule { get; set; } = new List<string>();
+        
+        public Bus(string name, string startLocation, List<string> schedule) 
         {
-            this.Name = Name;
-            this.StartLocation = startlocation;
+            Name = name;
+            StartLocation = startLocation;
+            Schedule = schedule;
+            
+            CurrentCove = CoveIndex.PirateCoves.Find(cove => cove.Location == startLocation);
+            CurrentCove.AddBus(this);
         }
-        public bool hasSpace() 
+        
+        bool HasSpace() => this.Passengers.Count < CAPACITY;
+        
+        PirateCove GetNextStation()
         {
-            return this.Passengers.Count < limit;
-        } 
-        public void AddStations(PirateCove location)
-        {
-            Schedule.Add(location);
-        }
-        public PirateCove GetNextStation()
-        {
-            int currentstationindex = 0;
-            for(int i = 0; i < Schedule.Count ; i++)
+            int currentStationIdx = 0;
+            
+            for (int i = 0; i < Schedule.Count ; i++)
             {
-                if(this.CurrentLocation == Schedule[i].Location)
+                if (CurrentCove.Location == Schedule[i])
                 {
-                    currentstationindex = i;  
-                }              
+                    currentStationIdx = i;
+                }
             }
-            return Schedule[currentstationindex+1];
+
+            if (currentStationIdx == Schedule.Count - 1)
+                return CoveIndex.PirateCoves.Find(cove => cove.Location == Schedule[0]);
+            else
+                return CoveIndex.PirateCoves.Find(cove => cove.Location == Schedule[currentStationIdx + 1]);
         }
-        public void SetGolfer(Golfer golfer)
+        
+        public void HandleTrip()
         {
-            if (Passengers.Count < limit)
+            DisembarkPassengers();
+            NextCove = GetNextStation();
+            
+            BoardPassengers();
+            CurrentCove.RemoveBus(this);
+            
+            // Travel to next station
+            
+            CurrentCove = NextCove;
+            CurrentCove.AddBus(this);
+        }
+        
+        void DisembarkPassengers()
+        {
+            for (int index = Passengers.Count - 1; index >= 0; index--)
+            {
+                Golfer golfer = Passengers[index];
+                if (golfer.EndLocation == CurrentCove.Location)
+                {
+                    CurrentCove.Visitors.Add(golfer);
+                    Passengers.Remove(golfer);
+                    Console.WriteLine($"{golfer.Name} disembarked {this.Name} at {CurrentCove.Location}.");
+                }
+            }
+        }
+        void BoardPassengers()
+        {
+            foreach (var golfer in CurrentCove.Visitors)
+            {
+                if (HasSpace() && golfer.EndLocation == NextCove.Location)
+                {
+                    Passengers.Add(golfer);
+                    NextCove.Visitors.Remove(golfer);
+                    Console.WriteLine($"{golfer.Name} boarded {this.Name} at {CurrentCove.Location} and is now heading to {NextCove.Location}.");
+                }
+            }
+        }
+        
+        void AddGolfer(Golfer golfer)
+        {
+            if (Passengers.Count < CAPACITY)
             {
                 Passengers.Add(golfer);
             }
             else
             {
-                Console.WriteLine($"Der Bus {this} ist voll!");
+                Console.WriteLine($"The bus {Name} is full. {golfer.Name} cannot board.");
             }
         }
-        public Golfer GetGolfer()
-        {
-            return Passengers.FirstOrDefault();
-        }      
+        Golfer RemoveGolfer() => Passengers.FirstOrDefault();
+
         public void PrintPassengers()
         {
             foreach (Golfer golfer in Passengers)

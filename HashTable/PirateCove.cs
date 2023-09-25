@@ -1,71 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PiratesCoves
+namespace PirateCoves
 {
-    internal class PirateCove
+    public class PirateCove
     {
-        public string Name { get; set; }
+        string Name { get; set; }
         public string Location { get; set; }
-        public List<Bus> Busse { get; set; } = new List<Bus>();
-        public Bus Bus { get; set; }
-        public List<Golfer> GolferAtCove { get; set; } = new List<Golfer>();
+        List<Bus> BussesAtCove { get; set; } = new List<Bus>();
+        public List<Golfer> Visitors { get; set; } = new List<Golfer>();
         public PirateCove(string location, string name) 
         {
             this.Name = name;
             this.Location = location;
         }
-        public string GetLocation()
+        public void AddBus(Bus bus) => BussesAtCove.Add(bus);
+
+        public void RemoveBus(Bus bus)
         {
-            return this.Location;
-        }
-        public void BusAdd(Bus bus)
-        {
-            Busse.Add(bus);
-        }
-        public void BusLeave(Bus bus)
-        {
-            if (Busse.Contains(bus))
+            if (BussesAtCove.Contains(bus))
             {
-                Busse.Remove(bus);
+                BussesAtCove.Remove(bus);
             }
         }
-        public void SetGolfer(Golfer golfer)
-        {
-            this.GolferAtCove.Add(golfer);
-        }
+        public void AddGolfer(Golfer golfer) => Visitors.Add(golfer);
+
         public void PrintGolfer()
         {
-            if(this.GolferAtCove.Count > 0)
+            if (Visitors.Count > 0)
             {
-                Console.WriteLine(this.Name + " has the following Golfers:");
-                foreach (Golfer golfer in  GolferAtCove)
+                Console.WriteLine($"{Name} has the following Golfers: ");
+                foreach (Golfer golfer in  Visitors)
                 {
-                    Console.WriteLine(golfer.Name);
+                    Console.Write(golfer.Name);
                 }
             }
             else 
             {
-                Console.WriteLine($"No Golfer at {this.Name}");
+                Console.WriteLine($"No Golfer at {Name}");
             }
             
         }
         public void PrintBusses()
         {
-            if(this.Busse.Count > 0)
-            {   Console.WriteLine(this.Busse.Count + " Vehicle/s at PirateCove " + this.Name);
-                foreach (var bus in Busse) 
+            if (BussesAtCove.Count > 0)
+            {   
+                Console.WriteLine($"{BussesAtCove.Count} Vehicle/s are currently at PirateCove {Name}. Names: ");
+                foreach (var bus in BussesAtCove) 
                 {
-                    Console.WriteLine(bus.Name);
+                    Console.Write(bus.Name);
                 }
             }
             else 
             {
-                Console.WriteLine("No Vehicles at PirateCove " + this.Name);
+                Console.WriteLine($"No Vehicles at PirateCove {Name}");
             }         
         }
     }
