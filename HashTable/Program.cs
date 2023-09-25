@@ -17,8 +17,6 @@ namespace PirateCoves
             List<Bus> busses = CreateBusses();
             List<Golfer> golfers = CreateGolfers();
             
-            string busJson = JsonSerializer.Serialize(busses[0]);
-
             int rounds = 0;
             while (rounds < 5)
             {
