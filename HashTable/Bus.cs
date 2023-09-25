@@ -60,8 +60,9 @@ namespace PirateCoves
         
         void DisembarkPassengers()
         {
-            foreach (var golfer in Passengers)    
+            for (int index = Passengers.Count - 1; index >= 0; index--)
             {
+                Golfer golfer = Passengers[index];
                 if (golfer.EndLocation == CurrentCove.Location)
                 {
                     CurrentCove.Visitors.Add(golfer);

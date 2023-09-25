@@ -68,7 +68,7 @@ namespace PirateCoves
         {
             return new List<Bus>
             {
-                new Bus("Ferrari Bus", "Italy", new List<string> {"Italy", "Germany", "Belgium", "Ireland", "UK"} ),
+                new Bus("Ferrari Bus", "Italy", new List<string> {"Italy", "Belgium", "Germany", "Ireland", "UK"} ),
                 new Bus("Mercedes Bus", "Germany", new List<string> {"Italy", "Germany", "Belgium", "Ireland", "UK"} ),
                 new Bus("Iren Bus", "Ireland", new List<string> {"Italy", "Germany", "Belgium", "Ireland", "UK"} ),
                 new Bus("BB", "Belgium", new List<string> {"Italy", "Germany", "Belgium", "Ireland", "UK"} ),
