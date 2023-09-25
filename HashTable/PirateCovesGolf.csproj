@@ -45,8 +45,6 @@
   <ItemGroup>
     <Compile Include="Bus.cs" />
     <Compile Include="Golfer.cs" />
-    <Compile Include="Helper.cs" />
-    <Compile Include="Manager.cs" />
     <Compile Include="PirateCove.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
